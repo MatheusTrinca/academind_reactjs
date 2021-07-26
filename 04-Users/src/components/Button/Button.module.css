@@ -1,0 +1,24 @@
+.button {
+  border: 0;
+  background-color: rgb(141, 1, 1);
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.button:hover {
+  background-color: rgb(7, 168, 88);
+}
+
+.button.remove {
+  background-color: rgb(141, 1, 1);
+}
+
+.button.remove:hover {
+  background-color: rgb(189, 0, 0);
+}

@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
