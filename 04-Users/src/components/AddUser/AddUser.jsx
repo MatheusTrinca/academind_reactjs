@@ -4,7 +4,7 @@ import Card from '../Card/Card';
 import Input from '../Input/Input';
 import styles from './AddUser.module.css';
 
-const AddUser = ({ addNewUser }) => {
+const AddUser = ({ addNewUser, showModal }) => {
   const [name, setName] = useState('');
   const [age, setAge] = useState(0);
 
@@ -15,6 +15,8 @@ const AddUser = ({ addNewUser }) => {
       addNewUser(name, age);
       setName('');
       setAge('');
+    } else {
+      showModal(true, 'Invalid Input', 'Please fill all fields');
     }
   };
 

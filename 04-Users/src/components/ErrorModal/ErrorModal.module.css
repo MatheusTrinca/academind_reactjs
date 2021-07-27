@@ -11,4 +11,23 @@
 }
 
 .modal {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  color: rgb(141, 1, 1);
+  font-size: 1.3rem;
+  margin-bottom: 3rem;
+}
+
+.message {
+  color: black;
+  font-size: 1.4rem;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.footer {
+  text-align: right;
 }

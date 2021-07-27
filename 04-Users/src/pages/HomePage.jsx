@@ -7,7 +7,7 @@ import ErrorModal from '../components/ErrorModal/ErrorModal';
 
 const HomePage = () => {
   const [users, setUsers] = useState(usersData);
-  const [openModal, setOpenModal] = useState(true);
+  const [modal, setModal] = useState({ open: false, title: '', message: '' });
 
   const addNewUser = (name, age) => {
     const id = new Date().getTime();
@@ -15,11 +15,23 @@ const HomePage = () => {
     setUsers([...users, newUser]);
   };
 
+  const modalHandler = (open, title = '', message = '') => {
+    setModal({ open, title, message });
+  };
+  //! FECHAR O MODAL
+  //! REMOVE USER FROM USERLIST
+
   return (
     <div className={styles.homepage}>
-      {openModal && <ErrorModal />}
+      {modal.open && (
+        <ErrorModal
+          closeModal={modalHandler}
+          title={modal.title}
+          message={modal.message}
+        />
+      )}
       <h2 className={styles.title}>Users Add</h2>
-      <AddUser addNewUser={addNewUser} />
+      <AddUser addNewUser={addNewUser} showModal={modalHandler} />
       <UsersList users={users} />
     </div>
   );
