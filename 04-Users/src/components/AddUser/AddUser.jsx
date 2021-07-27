@@ -9,18 +9,29 @@ const AddUser = ({ addNewUser }) => {
 
   const addUserHandler = e => {
     e.preventDefault();
-    addNewUser(name, age);
+    console.log(name, age);
+    if (name.length > 0 && age > 0) {
+      addNewUser(name, age);
+      setName('');
+      setAge('');
+    }
   };
 
   return (
     <div className={styles['add-user']}>
       <form onSubmit={addUserHandler}>
         <Input
-          text="Enter the username"
+          type="text"
+          text="Enter username"
           value={name}
-          onChange={() => setName(name)}
+          onChange={e => setName(e.target.value)}
         />
-        <Input text="Enter the age" value={age} onChange={() => setAge(age)} />
+        <Input
+          type="number"
+          text="Enter age"
+          value={age}
+          onChange={e => setAge(e.target.value)}
+        />
         <Button text="Add User" type="submit" />
       </form>
     </div>

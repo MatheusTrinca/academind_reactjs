@@ -6,7 +6,7 @@ const UsersList = ({ users }) => {
   return (
     <div className={styles['users-list']}>
       {users.map(user => (
-        <User id={user.id} {...user} />
+        <User key={user.id} {...user} />
       ))}
     </div>
   );

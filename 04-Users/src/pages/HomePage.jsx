@@ -7,7 +7,7 @@ import UsersList from '../components/UsersList/UsersList';
 const HomePage = () => {
   const [users, setUsers] = useState(usersData);
 
-  const addNewUser = (name, age) => {
+  const addNewUser = (name, age, setOpenModal) => {
     const id = new Date().getTime();
     const newUser = { id, name, age };
     setUsers([...users, newUser]);
