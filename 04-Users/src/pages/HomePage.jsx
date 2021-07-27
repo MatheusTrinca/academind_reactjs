@@ -8,7 +8,7 @@ const HomePage = () => {
   const [users, setUsers] = useState(usersData);
 
   const addNewUser = (name, age) => {
-    const id = new Date().getTime;
+    const id = new Date().getTime();
     const newUser = { id, name, age };
     setUsers([...users, newUser]);
   };
