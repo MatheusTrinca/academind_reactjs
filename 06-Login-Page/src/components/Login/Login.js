@@ -1,41 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 
-const Login = (props) => {
+const Login = props => {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
-
+  useEffect(() => {
     setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
+      enteredEmail.includes('@') && enteredPassword.trim().length > 6
     );
-  };
+  }, [enteredEmail, enteredPassword]);
 
-  const passwordChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
-
-    setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    );
-  };
-
-  const validateEmailHandler = () => {
-    setEmailIsValid(enteredEmail.includes('@'));
-  };
-
-  const validatePasswordHandler = () => {
-    setPasswordIsValid(enteredPassword.trim().length > 6);
-  };
-
-  const submitHandler = (event) => {
+  const submitHandler = event => {
     event.preventDefault();
     props.onLogin(enteredEmail, enteredPassword);
   };
@@ -53,8 +35,8 @@ const Login = (props) => {
             type="email"
             id="email"
             value={enteredEmail}
-            onChange={emailChangeHandler}
-            onBlur={validateEmailHandler}
+            onChange={e => setEnteredEmail(e.target.value)}
+            onBlur={() => setEmailIsValid(enteredEmail.includes('@'))}
           />
         </div>
         <div
@@ -67,8 +49,8 @@ const Login = (props) => {
             type="password"
             id="password"
             value={enteredPassword}
-            onChange={passwordChangeHandler}
-            onBlur={validatePasswordHandler}
+            onChange={e => setEnteredPassword(e.target.value)}
+            onBlur={() => setPasswordIsValid(enteredPassword.trim().length > 6)}
           />
         </div>
         <div className={classes.actions}>
