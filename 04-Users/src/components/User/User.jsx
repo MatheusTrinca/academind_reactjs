@@ -2,12 +2,12 @@ import React from 'react';
 import styles from './User.module.css';
 import Button from '../Button/Button';
 
-const User = ({ name, age }) => {
+const User = ({ id, name, age, removeUser }) => {
   return (
     <div className={styles.user}>
       <h2 className={styles.name}>{name},</h2>
       <h2 className={styles.age}>{age} anos</h2>
-      <Button text="Remove" remove={true} />
+      <Button text="Remove" remove={true} actionBtn={() => removeUser(id)} />
     </div>
   );
 };

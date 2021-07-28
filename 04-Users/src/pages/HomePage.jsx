@@ -18,21 +18,27 @@ const HomePage = () => {
   const modalHandler = (open, title = '', message = '') => {
     setModal({ open, title, message });
   };
-  //! FECHAR O MODAL
-  //! REMOVE USER FROM USERLIST
+
+  const closeModalHandler = () => {
+    setModal({ open: false, title: '', message: '' });
+  };
+
+  const removeUserHandler = id => {
+    setUsers(users.filter(user => user.id !== id));
+  };
 
   return (
     <div className={styles.homepage}>
       {modal.open && (
         <ErrorModal
-          closeModal={modalHandler}
+          closeModal={closeModalHandler}
           title={modal.title}
           message={modal.message}
         />
       )}
       <h2 className={styles.title}>Users Add</h2>
       <AddUser addNewUser={addNewUser} showModal={modalHandler} />
-      <UsersList users={users} />
+      <UsersList users={users} removeUser={removeUserHandler} />
     </div>
   );
 };

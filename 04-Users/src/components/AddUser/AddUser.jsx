@@ -10,7 +10,6 @@ const AddUser = ({ addNewUser, showModal }) => {
 
   const addUserHandler = e => {
     e.preventDefault();
-    console.log(name, age);
     if (name.length > 0 && age > 0) {
       addNewUser(name, age);
       setName('');

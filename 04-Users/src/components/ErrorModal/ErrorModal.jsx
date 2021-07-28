@@ -15,11 +15,7 @@ const ErrorModal = ({ title, message, closeModal }) => {
             <p className={styles.message}>{message}</p>
           </main>
           <footer className={styles.footer}>
-            <Button
-              onClick={() => closeModal(false)}
-              text="Close"
-              remove={true}
-            />
+            <Button actionBtn={closeModal} text="Close" remove={true} />
           </footer>
         </div>
       </Card>
