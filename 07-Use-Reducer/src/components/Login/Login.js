@@ -4,7 +4,7 @@ import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 
-const Login = props => {
+const Login = (props) => {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
@@ -12,17 +12,52 @@ const Login = props => {
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
-    const identifier = setTimeout(() => {
-      setFormIsValid(
-        enteredEmail.includes('@') && enteredPassword.trim().length > 6
-      );
-    }, 500);
-    return () => {
-      clearTimeout(identifier);
-    };
-  }, [enteredEmail, enteredPassword]);
+    console.log('EFFECT RUNNING');
 
-  const submitHandler = event => {
+    return () => {
+      console.log('EFFECT CLEANUP');
+    };
+  }, []);
+
+  // useEffect(() => {
+  //   const identifier = setTimeout(() => {
+  //     console.log('Checking form validity!');
+  //     setFormIsValid(
+  //       enteredEmail.includes('@') && enteredPassword.trim().length > 6
+  //     );
+  //   }, 500);
+
+  //   return () => {
+  //     console.log('CLEANUP');
+  //     clearTimeout(identifier);
+  //   };
+  // }, [enteredEmail, enteredPassword]);
+
+  const emailChangeHandler = (event) => {
+    setEnteredEmail(event.target.value);
+
+    setFormIsValid(
+      event.target.value.includes('@') && enteredPassword.trim().length > 6
+    );
+  };
+
+  const passwordChangeHandler = (event) => {
+    setEnteredPassword(event.target.value);
+
+    setFormIsValid(
+      enteredEmail.includes('@') && event.target.value.trim().length > 6
+    );
+  };
+
+  const validateEmailHandler = () => {
+    setEmailIsValid(enteredEmail.includes('@'));
+  };
+
+  const validatePasswordHandler = () => {
+    setPasswordIsValid(enteredPassword.trim().length > 6);
+  };
+
+  const submitHandler = (event) => {
     event.preventDefault();
     props.onLogin(enteredEmail, enteredPassword);
   };
@@ -40,8 +75,8 @@ const Login = props => {
             type="email"
             id="email"
             value={enteredEmail}
-            onChange={e => setEnteredEmail(e.target.value)}
-            onBlur={() => setEmailIsValid(enteredEmail.includes('@'))}
+            onChange={emailChangeHandler}
+            onBlur={validateEmailHandler}
           />
         </div>
         <div
@@ -54,8 +89,8 @@ const Login = props => {
             type="password"
             id="password"
             value={enteredPassword}
-            onChange={e => setEnteredPassword(e.target.value)}
-            onBlur={() => setPasswordIsValid(enteredPassword.trim().length > 6)}
+            onChange={passwordChangeHandler}
+            onBlur={validatePasswordHandler}
           />
         </div>
         <div className={classes.actions}>
