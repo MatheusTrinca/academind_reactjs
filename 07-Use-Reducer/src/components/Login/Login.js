@@ -106,7 +106,7 @@ const Login = () => {
     } else if (!emailValid) {
       emailRef.current.focus();
     } else {
-      passwordRef.current.focus();
+      passwordRef.current.focuss();
     }
   };
 
