@@ -1,14 +1,30 @@
-const { default: Header } = require('./components/Layout/Header');
-const { default: Meals } = require('./components/Meals/Meals');
+import React, { useState } from 'react';
+
+import Cart from './components/Cart/Cart';
+import CartProvider from './components/Contexts/CartProvider';
+
+import Header from './components/Layout/Header';
+import Meals from './components/Meals/Meals';
 
 function App() {
+  const [isModalShow, setIsModalShow] = useState(false);
+
+  const showModalHandler = () => {
+    setIsModalShow(true);
+  };
+
+  const hideModalHandler = () => {
+    setIsModalShow(false);
+  };
+
   return (
-    <>
-      <Header />
+    <CartProvider>
+      {isModalShow && <Cart onClose={hideModalHandler} />}
+      <Header onShowModal={showModalHandler} />
       <main>
         <Meals />
       </main>
-    </>
+    </CartProvider>
   );
 }
 
