@@ -5,11 +5,15 @@ import classes from './Cart.module.css';
 import CartItem from './CartItem';
 
 const Cart = ({ onClose }) => {
-  const { items, totalAmount } = useContext(CartContext);
+  const { items, totalAmount, addItem, removeItem } = useContext(CartContext);
 
-  const addItemHandler = item => {};
+  const addItemHandler = item => {
+    addItem({ ...item, amount: 1 });
+  };
 
-  const removeItemHandler = id => {};
+  const removeItemHandler = id => {
+    removeItem(id);
+  };
 
   const cartItems = (
     <ul className={classes['cart-item']}>
