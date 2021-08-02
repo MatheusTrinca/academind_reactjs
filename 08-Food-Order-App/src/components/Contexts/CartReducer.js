@@ -3,8 +3,25 @@ import { ADD_ITEM, REMOVE } from './types';
 const CartReducer = (state, action) => {
   switch (action.type) {
     case ADD_ITEM:
+      const existingCartItemIdx = state.items.findIndex(
+        item => item.id === action.payload.id
+      );
+      const existingItem = state.items[existingCartItemIdx];
+      let updatedItem;
+      let updatedItems;
+      if (existingItem) {
+        updatedItem = {
+          ...existingItem,
+          amount: existingItem.amount + action.payload.amount,
+        };
+        updatedItems = [...state.items];
+        updatedItems[existingCartItemIdx] = updatedItem;
+      } else {
+        updatedItems = [...state.items, action.payload];
+      }
+
       return {
-        items: [...state.items, action.payload],
+        items: updatedItems,
         totalAmount:
           state.totalAmount + action.payload.price * action.payload.amount,
       };
