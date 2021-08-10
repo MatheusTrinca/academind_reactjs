@@ -1,3 +1,4 @@
+import React from 'react';
 import Section from '../UI/Section';
 import TaskItem from './TaskItem';
 import classes from './Tasks.module.css';
