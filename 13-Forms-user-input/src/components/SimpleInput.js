@@ -1,32 +1,34 @@
 import React, { useState } from 'react';
 
 const SimpleInput = props => {
-  const [enteredValue, setEnteredValue] = useState('');
-  const [isInputTouched, setIsInputTouched] = useState(false);
+  const [enteredName, setEnteredName] = useState({ value: '', touched: false });
+  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
-  const nameInputIsValid = enteredValue.trim() !== '';
-  const nameInputIsInvalid = !nameInputIsValid && isInputTouched;
+  const enteredNameIsValid = enteredName.trim() !== '';
+  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
 
-  console.log('nameInputIsValid', nameInputIsValid);
-  console.log('nameInputIsInvalid', nameInputIsInvalid);
+  let formIsValid = false;
+  if (enteredNameIsValid) {
+    formIsValid = true;
+  }
 
   const inputBlurHandler = () => {
-    setIsInputTouched(true);
+    setEnteredNameTouched(true);
   };
 
   const changeInputHandler = e => {
-    setEnteredValue(e.target.value);
+    setEnteredName(e.target.value);
   };
 
   const formSubmissionHandler = e => {
     e.preventDefault();
-    setIsInputTouched(true);
-    if (!nameInputIsValid) {
+    setEnteredNameTouched(true);
+    if (!enteredNameIsValid) {
       return;
     }
-    console.log(enteredValue);
-    setEnteredValue('');
-    setIsInputTouched(false);
+    console.log(enteredName);
+    setEnteredName('');
+    setEnteredNameTouched(false);
   };
 
   return (
@@ -38,12 +40,12 @@ const SimpleInput = props => {
           id="name"
           onChange={changeInputHandler}
           onBlur={inputBlurHandler}
-          value={enteredValue}
+          value={enteredName}
         />
         {nameInputIsInvalid && <p className="error-text">Invalid input</p>}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
