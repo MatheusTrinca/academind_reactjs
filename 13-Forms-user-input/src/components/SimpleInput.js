@@ -17,9 +17,6 @@ const SimpleInput = props => {
     formIsValid = true;
   }
 
-  console.log(nameInputIsInvalid);
-  console.log(emailInputIsInvalid);
-
   const formSubmissionHandler = e => {
     e.preventDefault();
     setNameInput({ ...nameInput, touched: true });
