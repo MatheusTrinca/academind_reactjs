@@ -7,22 +7,23 @@ import useHttp from './components/hooks/useHttp';
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  const { error, isLoading, sendRequest } = useHttp(
-    {
-      url: 'https://academind-react-c9abc-default-rtdb.firebaseio.com/tasks.json',
-    },
-    data => {
+  const { error, isLoading, sendRequest } = useHttp();
+
+  useEffect(() => {
+    const transformData = data => {
       const loadedTasks = [];
       for (const taskKey in data) {
         loadedTasks.push({ id: taskKey, text: data[taskKey].text });
       }
       setTasks(loadedTasks);
-    }
-  );
-
-  useEffect(() => {
-    sendRequest();
-  }, []);
+    };
+    sendRequest(
+      {
+        url: 'https://academind-react-c9abc-default-rtdb.firebaseio.com/tasks.json',
+      },
+      transformData
+    );
+  }, [sendRequest]);
 
   const taskAddHandler = task => {
     setTasks(prevTasks => prevTasks.concat(task));
