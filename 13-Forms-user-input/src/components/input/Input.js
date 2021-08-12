@@ -2,14 +2,8 @@ import React from 'react';
 import './Input.css';
 
 const Input = ({ inputController, label, type, id }) => {
-  const {
-    value,
-    valueIsValid,
-    inputIsInvalid,
-    changeValueHandler,
-    changeBlurHandler,
-    reset,
-  } = inputController;
+  const { value, inputIsInvalid, changeValueHandler, changeBlurHandler } =
+    inputController;
 
   return (
     <div className={`form-control ${inputIsInvalid && 'invalid'}`}>
