@@ -7,8 +7,8 @@ const useInput = validate => {
   const valueIsValid = validate(value);
   const inputIsInvalid = !valueIsValid && isTouched;
 
-  const changeValueHandler = value => {
-    setValue(value);
+  const changeValueHandler = val => {
+    setValue(val);
   };
 
   const changeBlurHandler = () => {
@@ -22,7 +22,6 @@ const useInput = validate => {
 
   return {
     value,
-    isTouched,
     valueIsValid,
     inputIsInvalid,
     changeValueHandler,
