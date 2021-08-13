@@ -1,36 +1,42 @@
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import classes from './AvailableMeals.module.css';
-
-const DUMMY_MEALS = [
-  {
-    id: 'm1',
-    name: 'Sushi',
-    description: 'Finest fish and veggies',
-    price: 22.99,
-  },
-  {
-    id: 'm2',
-    name: 'Schnitzel',
-    description: 'A german specialty!',
-    price: 16.5,
-  },
-  {
-    id: 'm3',
-    name: 'Barbecue Burger',
-    description: 'American, raw, meaty',
-    price: 12.99,
-  },
-  {
-    id: 'm4',
-    name: 'Green Bowl',
-    description: 'Healthy...and green...',
-    price: 18.99,
-  },
-];
+import useHttp from '../hooks/useHttp';
+import { useEffect, useState } from 'react';
 
 const AvailableMeals = () => {
-  const mealsList = DUMMY_MEALS.map((meal) => (
+  const [meals, setMeals] = useState([]);
+  const { isLoading, sendRequest } = useHttp();
+
+  useEffect(() => {
+    sendRequest(
+      {
+        url: 'https://academind-react-c9abc-default-rtdb.firebaseio.com/meals.json',
+      },
+      data => {
+        let dataArray = [];
+        for (let key in data) {
+          dataArray.push({
+            id: key,
+            description: data[key].description,
+            name: data[key].name,
+            price: data[key].price,
+          });
+        }
+        setMeals(dataArray);
+      }
+    );
+  }, [sendRequest]);
+
+  if (isLoading) {
+    return (
+      <section className={classes.mealIsLoading}>
+        <p>Loading...</p>
+      </section>
+    );
+  }
+
+  const mealsList = meals.map(meal => (
     <MealItem
       key={meal.id}
       id={meal.id}
