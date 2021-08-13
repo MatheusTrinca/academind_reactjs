@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
-  const { isLoading, sendRequest } = useHttp();
+  const { isLoading, error, sendRequest } = useHttp();
 
   useEffect(() => {
     sendRequest(
@@ -32,6 +32,14 @@ const AvailableMeals = () => {
     return (
       <section className={classes.mealIsLoading}>
         <p>Loading...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className={classes.mealError}>
+        <p>{error}</p>
       </section>
     );
   }

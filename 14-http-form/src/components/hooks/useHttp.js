@@ -13,7 +13,7 @@ const useHttp = () => {
         headers: requestConfig.headers ? requestConfig.headers : {},
       });
       if (!response.ok) {
-        throw new Error('Error fetching');
+        throw new Error('Error fetching data');
       }
       const data = await response.json();
       applyData(data);
