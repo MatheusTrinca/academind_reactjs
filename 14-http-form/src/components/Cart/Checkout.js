@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useInput from '../hooks/useInput';
 import classes from './Checkout.module.css';
 
-const Checkout = ({ onCancel }) => {
+const Checkout = ({ onCancel, onConfirm }) => {
   const nameInput = useInput();
   const streetInput = useInput();
   const postalInput = useInput(value => value.trim().length > 5);
   const cityInput = useInput();
+  const [inputValidate, setInputValidate] = useState({
+    name: true,
+    street: true,
+    postal: true,
+    city: true,
+  });
 
   const formIsValid =
     nameInput.isValid &&
@@ -16,13 +22,21 @@ const Checkout = ({ onCancel }) => {
 
   const confirmHandler = e => {
     e.preventDefault();
+
+    setInputValidate({
+      name: nameInput.isValid,
+      street: streetInput.isValid,
+      postal: postalInput.isValid,
+      city: cityInput.isValid,
+    });
+
     if (formIsValid) {
-      // ENVIAR DADOS PARA CART
-      console.log(nameInput.value);
-      nameInput.resetValue();
-      streetInput.resetValue();
-      postalInput.resetValue();
-      cityInput.resetValue();
+      onConfirm({
+        name: nameInput.value,
+        street: streetInput.value,
+        postal: postalInput.value,
+        city: cityInput.value,
+      });
     }
   };
 
@@ -30,7 +44,7 @@ const Checkout = ({ onCancel }) => {
     <form onSubmit={confirmHandler}>
       <div
         className={`${classes.control} ${
-          !nameInput.isValid && classes.invalid
+          !inputValidate.name && classes.invalid
         }`}
       >
         <label htmlFor="name">Your Name</label>
@@ -40,11 +54,11 @@ const Checkout = ({ onCancel }) => {
           value={nameInput.value}
           onChange={nameInput.changeValueHandler}
         />
-        {!nameInput.isValid && <p>Please enter a name</p>}
+        {!inputValidate.name && <p>Please enter a name</p>}
       </div>
       <div
         className={`${classes.control} ${
-          !streetInput.isValid && classes.invalid
+          !inputValidate.street && classes.invalid
         }`}
       >
         <label htmlFor="street">Street</label>
@@ -54,11 +68,11 @@ const Checkout = ({ onCancel }) => {
           value={streetInput.value}
           onChange={streetInput.changeValueHandler}
         />
-        {!streetInput.isValid && <p>Please enter a street</p>}
+        {!inputValidate.street && <p>Please enter a street</p>}
       </div>
       <div
         className={`${classes.control} ${
-          !postalInput.isValid && classes.invalid
+          !inputValidate.postal && classes.invalid
         }`}
       >
         <label htmlFor="postal">Postal Code</label>
@@ -68,11 +82,11 @@ const Checkout = ({ onCancel }) => {
           value={postalInput.value}
           onChange={postalInput.changeValueHandler}
         />
-        {!postalInput.isValid && <p>Please enter a valid postal code</p>}
+        {!inputValidate.postal && <p>Please enter a valid postal code</p>}
       </div>
       <div
         className={`${classes.control} ${
-          !cityInput.isValid && classes.invalid
+          !inputValidate.city && classes.invalid
         }`}
       >
         <label htmlFor="city">City</label>
@@ -82,13 +96,11 @@ const Checkout = ({ onCancel }) => {
           value={cityInput.value}
           onChange={cityInput.changeValueHandler}
         />
-        {!cityInput.isValid && <p>Please enter a city</p>}
+        {!inputValidate.city && <p>Please enter a city</p>}
       </div>
       <div className={classes.actions}>
         <button onClick={onCancel}>Close</button>
-        <button disabled={!formIsValid} type="submit">
-          Confirm
-        </button>
+        <button type="submit">Confirm</button>
       </div>
     </form>
   );

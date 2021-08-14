@@ -16,7 +16,7 @@ const useHttp = () => {
         throw new Error('Error fetching data');
       }
       const data = await response.json();
-      applyData(data);
+      applyData && applyData(data);
     } catch (err) {
       setError(err.message || 'Something went wrong');
     }
