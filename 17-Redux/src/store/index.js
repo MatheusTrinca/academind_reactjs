@@ -2,6 +2,7 @@ import { createStore } from 'redux';
 
 const initialState = {
   counter: 0,
+  toggleCounter: true,
 };
 
 const counterReducer = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const counterReducer = (state = initialState, action) => {
       return {
         ...state,
         counter: state.counter + action.payload,
+      };
+    case 'TOGGLE':
+      return {
+        ...state,
+        toggleCounter: !state.toggleCounter,
       };
 
     default:
