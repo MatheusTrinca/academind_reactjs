@@ -17,7 +17,10 @@ const NewCommentForm = props => {
     event.preventDefault();
     // optional: Could validate here
     // send comment to server
-    sendRequest({ text: commentTextRef.current.value });
+    sendRequest({
+      commentData: { text: commentTextRef.current.value },
+      quoteId: props.quoteId,
+    });
   };
 
   return (
