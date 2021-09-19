@@ -43,7 +43,10 @@ const AuthForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        authContext.login(data.idToken);
+        const expiresIn = new Date(
+          new Date().getTime() + +data.expiresIn * 1000
+        );
+        authContext.login(data.idToken, expiresIn);
         history.replace('/');
       } else {
         let errorMessage = 'Authentication failed!';
