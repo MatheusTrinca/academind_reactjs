@@ -1,44 +1,54 @@
 import React from 'react';
 import MeetupDetail from '../../components/meetups/MeetupDetail';
+import { MongoClient, ObjectId } from 'mongodb';
 
-const MeetupDetails = props => {
+const MeetupDetails = ({ meetupData }) => {
   return (
     <MeetupDetail
-      title="A First Meetup"
-      image="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2l0eXxlbnwwfHwwfHw%3D&w=1000&q=80"
-      address="Some Address 10, 1234 Some City"
-      description="This is a first meetup description"
+      title={meetupData.title}
+      image={meetupData.image}
+      address={meetupData.address}
+      description={meetupData.description}
     />
   );
 };
 
-export function getStaticPaths() {
+export async function getStaticPaths() {
+  const client = await MongoClient.connect(
+    `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.9nli6.mongodb.net/meetups?retryWrites=true&w=majority`
+  );
+  const db = client.db();
+  const meetupsCollection = db.collection('meetups');
+  const meetups = await meetupsCollection.find({}, { _id: 1 }).toArray();
+  client.close();
   return {
     fallback: false,
-    paths: [
-      {
-        params: {
-          meetupId: 'm1',
-        },
-      },
-      {
-        params: {
-          meetupId: 'm2',
-        },
-      },
-    ],
+    paths: meetups.map(meetup => ({
+      params: { meetupId: meetup._id.toString() },
+    })),
   };
 }
 
 export async function getStaticProps(context) {
+  const meetupId = context.params.meetupId;
+  const client = await MongoClient.connect(
+    `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.9nli6.mongodb.net/meetups?retryWrites=true&w=majority`
+  );
+  const db = client.db();
+  const meetupsCollection = db.collection('meetups');
+  const meetup = await meetupsCollection.findOne({
+    _id: new ObjectId(meetupId),
+  });
+
+  client.close();
   return {
     props: {
       meetupData: {
-        title: 'A First Meetup',
-        image:
-          'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2l0eXxlbnwwfHwwfHw%3D&w=1000&q=80',
-        address: 'Some Address 10, 1234 Some City',
-        description: 'This is a first meetup description',
+        id: meetup._id.toString(),
+        title: meetup.title,
+        image: meetup.image,
+        address: meetup.title,
+        description: meetup.description,
       },
     },
   };
