@@ -1,5 +1,6 @@
 import React from 'react';
 import NewMeetupForm from '../../components/meetups/NewMeetupForm';
+import Head from 'next/head';
 
 const NewMeetup = () => {
   const addMeetupHandler = async enteredMeetup => {
@@ -14,7 +15,15 @@ const NewMeetup = () => {
     console.log(data);
   };
 
-  return <NewMeetupForm onAddMeetup={addMeetupHandler} />;
+  return (
+    <>
+      <Head>
+        <title>React Meetups - Add Meetup</title>
+        <meta name="description" content="This is the description of page" />
+      </Head>
+      <NewMeetupForm onAddMeetup={addMeetupHandler} />
+    </>
+  );
 };
 
 export default NewMeetup;
