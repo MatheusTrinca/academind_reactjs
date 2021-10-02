@@ -1,7 +1,11 @@
 import React, { createContext, useState } from 'react';
 
-const initialState = {
-  products: [
+export const ProductsContext = createContext({
+  products: [],
+});
+
+export default props => {
+  const [productsList, setProductsList] = useState([
     {
       id: 'p1',
       title: 'Red Scarf',
@@ -26,15 +30,7 @@ const initialState = {
       description: 'Street style! An orange hat.',
       isFavorite: false,
     },
-  ],
-};
-
-export const ProductsContext = createContext({
-  products: [],
-});
-
-export default props => {
-  const [productsList, setProductsList] = useState(initialState);
+  ]);
 
   return (
     <ProductsContext.Provider
