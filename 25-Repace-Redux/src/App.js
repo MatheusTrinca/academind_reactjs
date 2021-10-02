@@ -4,6 +4,9 @@ import { Route } from 'react-router-dom';
 import Navigation from './components/Nav/Navigation';
 import ProductsPage from './containers/Products';
 import FavoritesPage from './containers/Favorites';
+import configureProductsStore from './components/hooks-store/products-store';
+
+configureProductsStore();
 
 const App = props => {
   return (
